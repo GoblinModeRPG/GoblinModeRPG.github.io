@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>D&D 5E Character Sheet</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    /* === Character Sheet Page Styling === */
+    body {
+      background-color: var(--light-beige);
+      color: var(--dark-grey);
+      padding: 1.5rem;
+    }
+
+    header {
+      text-align: center;
+      background-color: var(--dark-red);
+      color: var(--lightest);
+      padding: 1rem;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr 1fr;
+      gap: 1rem;
+      background-color: var(--lightest);
+      border: 8px solid transparent;
+      border-image-source: url("../images/border.png");
+      border-image-slice: 120 120 120 120;
+      border-image-width: 45px;
+      border-radius: 1rem;
+      padding: 1rem;
+    }
+
+    section {
+      background-color: #fff8ee;
+      border: 2px solid var(--dark-red);
+      border-radius: 1rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    h2, h3 {
+      color: var(--dark-red);
+      margin-bottom: 0.5rem;
+      border-bottom: 2px solid var(--dark-red);
+      padding-bottom: 0.25rem;
+      font-size: 1.2rem;
+    }
+
+    label {
+      display: block;
+      margin: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      padding: 0.3rem;
+      margin-top: 0.2rem;
+      border: 1px solid #ccc;
+      border-radius: 0.4rem;
+      background-color: var(--lightest);
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    /* === Layout Columns === */
+    .left-col, .center-col, .right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* === Character Info === */
+    .character-info .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.5rem;
+    }
+
+    /* === Ability Scores === */
+    .abilities {
+      text-align: center;
+    }
+    .ability-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .ability {
+      background-color: var(--light-beige);
+      border: 1px solid var(--dark-red);
+      border-radius: 0.5rem;
+      padding: 0.5rem;
+    }
+    .ability label {
+      font-weight: bold;
+    }
+
+    /* === Saving Throws === */
+    .saving-throws label {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* === Combat Info === */
+    .combat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      text-align: center;
+    }
+
+    .attacks table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.5rem;
+    }
+
+    .attacks th, .attacks td {
+      border: 1px solid #bbb;
+      padding: 0.4rem;
+      text-align: left;
+    }
+
+    /* === Skills === */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.25rem;
+    }
+
+    .skills-grid label {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* === Traits === */
+    .traits textarea {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+
+    /* === Background === */
+    .background .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 0.5rem;
+    }
+
+    footer {
+      grid-column: span 3;
+      background-color: var(--dark-red);
+      color: var(--lightest);
+      text-align: center;
+      padding: 1rem;
+      border-radius: 0.5rem;
+    }
+
+    @media (max-width: 1000px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+      footer {
+        grid-column: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Dungeons & Dragons 5E Character Sheet</h1>
+  </header>
+
+  <main>
+    <!-- LEFT COLUMN -->
+    <div class="left-col">
+      <section class="character-info">
+        <h2>Character Info</h2>
+        <div class="info-grid">
+          <label>Character Name: <input type="text" name="characterName"></label>
+          <label>Class & Level: <input type="text" name="classLevel"></label>
+          <label>Background: <input type="text" name="background"></label>
+          <label>Race: <input type="text" name="race"></label>
+          <label>Alignment: <input type="text" name="alignment"></label>
+          <label>XP: <input type="number" name="xp"></label>
+        </div>
+      </section>
+
+      <section class="abilities">
+        <h2>Ability Scores</h2>
+        <div class="ability-list">
+          <div class="ability"><label>Strength</label><input type="number" name="str"></div>
+          <div class="ability"><label>Dexterity</label><input type="number" name="dex"></div>
+          <div class="ability"><label>Constitution</label><input type="number" name="con"></div>
+          <div class="ability"><label>Intelligence</label><input type="number" name="int"></div>
+          <div class="ability"><label>Wisdom</label><input type="number" name="wis"></div>
+          <div class="ability"><label>Charisma</label><input type="number" name="cha"></div>
+        </div>
+      </section>
+
+      <section class="saving-throws">
+        <h2>Saving Throws</h2>
+        <label><input type="checkbox" name="save_str"> Strength</label>
+        <label><input type="checkbox" name="save_dex"> Dexterity</label>
+        <label><input type="checkbox" name="save_con"> Constitution</label>
+        <label><input type="checkbox" name="save_int"> Intelligence</label>
+        <label><input type="checkbox" name="save_wis"> Wisdom</label>
+        <label><input type="checkbox" name="save_cha"> Charisma</label>
+      </section>
+    </div>
+
+    <!-- CENTER COLUMN -->
+    <div class="center-col">
+      <section class="combat">
+        <h2>Combat Stats</h2>
+        <div class="combat-grid">
+          <label>Armor Class <input type="number" name="ac"></label>
+          <label>Initiative <input type="number" name="initiative"></label>
+          <label>Speed <input type="number" name="speed"></label>
+          <label>Max HP <input type="number" name="hpMax"></label>
+          <label>Current HP <input type="number" name="hpCurrent"></label>
+          <label>Temp HP <input type="number" name="hpTemp"></label>
+          <label>Hit Dice <input type="text" name="hitDice"></label>
+          <label>Death Saves <input type="text" name="deathSaves"></label>
+        </div>
+      </section>
+
+      <section class="attacks">
+        <h2>Attacks & Spellcasting</h2>
+        <table>
+          <thead>
+            <tr><th>Name</th><th>Attack Bonus</th><th>Damage / Type</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="text" name="attack1_name"></td>
+              <td><input type="text" name="attack1_bonus"></td>
+              <td><input type="text" name="attack1_damage"></td>
+            </tr>
+            <tr>
+              <td><input type="text" name="attack2_name"></td>
+              <td><input type="text" name="attack2_bonus"></td>
+              <td><input type="text" name="attack2_damage"></td>
+            </tr>
+            <tr>
+              <td><input type="text" name="attack3_name"></td>
+              <td><input type="text" name="attack3_bonus"></td>
+              <td><input type="text" name="attack3_damage"></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="spellcasting">
+        <h2>Spellcasting</h2>
+        <label>Spellcasting Class <input type="text" name="spellcastingClass"></label>
+        <label>Spellcasting Ability <input type="text" name="spellcastingAbility"></label>
+        <label>Spell Save DC <input type="number" name="spellSaveDC"></label>
+        <label>Spell Attack Bonus <input type="number" name="spellAttackBonus"></label>
+        <textarea rows="6" name="spellsList" placeholder="List your spells..."></textarea>
+      </section>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="right-col">
+      <section class="skills">
+        <h2>Skills</h2>
+        <div class="skills-grid">
+          <label><input type="checkbox" name="skill_acrobatics"> Acrobatics (Dex)</label>
+          <label><input type="checkbox" name="skill_animalHandling"> Animal Handling (Wis)</label>
+          <label><input type="checkbox" name="skill_arcana"> Arcana (Int)</label>
+          <label><input type="checkbox" name="skill_athletics"> Athletics (Str)</label>
+          <label><input type="checkbox" name="skill_deception"> Deception (Cha)</label>
+          <label><input type="checkbox" name="skill_history"> History (Int)</label>
+          <label><input type="checkbox" name="skill_insight"> Insight (Wis)</label>
+          <label><input type="checkbox" name="skill_intimidation"> Intimidation (Cha)</label>
+          <label><input type="checkbox" name="skill_investigation"> Investigation (Int)</label>
+          <label><input type="checkbox" name="skill_medicine"> Medicine (Wis)</label>
+          <label><input type="checkbox" name="skill_nature"> Nature (Int)</label>
+          <label><input type="checkbox" name="skill_perception"> Perception (Wis)</label>
+          <label><input type="checkbox" name="skill_performance"> Performance (Cha)</label>
+          <label><input type="checkbox" name="skill_persuasion"> Persuasion (Cha)</label>
+          <label><input type="checkbox" name="skill_religion"> Religion (Int)</label>
+          <label><input type="checkbox" name="skill_sleightOfHand"> Sleight of Hand (Dex)</label>
+          <label><input type="checkbox" name="skill_stealth"> Stealth (Dex)</label>
+          <label><input type="checkbox" name="skill_survival"> Survival (Wis)</label>
+        </div>
+        <label>Passive Perception: <input type="number" name="passivePerception"></label>
+      </section>
+
+      <section class="traits">
+        <h2>Features & Traits</h2>
+        <textarea rows="4" name="featuresTraits" placeholder="Class features, racial traits, etc."></textarea>
+
+        <h3>Personality</h3>
+        <label>Personality Traits <textarea rows="2" name="personalityTraits"></textarea></label>
+        <label>Ideals <textarea rows="2" name="ideals"></textarea></label>
+        <label>Bonds <textarea rows="2" name="bonds"></textarea></label>
+        <label>Flaws <textarea rows="2" name="flaws"></textarea></label>
+      </section>
+
+      <section class="background">
+        <h2>Background & Appearance</h2>
+        <div class="info-grid">
+          <label>Age: <input type="number" name="age"></label>
+          <label>Height: <input type="text" name="height"></label>
+          <label>Weight: <input type="text" name="weight"></label>
+          <label>Eyes: <input type="text" name="eyes"></label>
+          <label>Skin: <input type="text" name="skin"></label>
+          <label>Hair: <input type="text" name="hair"></label>
+        </div>
+        <textarea rows="3" name="appearance" placeholder="Appearance..."></textarea>
+        <textarea rows="5" name="backstory" placeholder="Character backstory..."></textarea>
+      </section>
+    </div>
+
+    <footer>
+      Based on the Dungeons & Dragons 5E Character Sheet © Wizards of the Coast
+    </footer>
+  </main>
+  <script type="module">
+  import { getCharacterSheet, saveCharacterSheet } from "../firebaseDnDFlavor.js";
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    const uid = localStorage.getItem("currentUid");
+    const groupid = localStorage.getItem("curID");
+
+    if (!uid || !groupid) {
+      console.error("Missing user or group ID. Cannot load character sheet.");
+      return;
+    }
+
+    // --- Create Save Button ---
+    const saveBtn = document.createElement("button");
+    saveBtn.textContent = "Save Character Sheet";
+    saveBtn.classList.add("saveEdits");
+    saveBtn.style.display = "block";
+    saveBtn.style.margin = "1rem auto";
+    saveBtn.style.fontSize = "1.1rem";
+    saveBtn.style.padding = "0.6rem 2rem";
+    saveBtn.style.backgroundColor = "var(--light-blue)";
+    saveBtn.style.borderRadius = "1rem";
+    saveBtn.style.border = "2px solid var(--dark-red)";
+    saveBtn.style.color = "var(--dark-brown)";
+    document.querySelector("main").appendChild(saveBtn);
+
+    // --- Collect all field data ---
+    function getSheetData() {
+      const data = {};
+      document.querySelectorAll("input, textarea").forEach(el => {
+        const key = el.name || el.id;
+        if (!key) return;
+        if (el.type === "checkbox") {
+          data[key] = el.checked;
+        } else {
+          data[key] = el.value;
+        }
+      });
+      return data;
+    }
+
+    // --- Populate all fields from saved data ---
+    function populateSheet(data) {
+      Object.keys(data).forEach(key => {
+        const el = document.querySelector(`[name="${key}"]`);
+        if (!el) return;
+
+        if (el.type === "checkbox") {
+          el.checked = data[key];
+        } else {
+          el.value = data[key];
+        }
+      });
+    }
+
+    // --- Try to load character sheet from Firebase ---
+    let savedSheet = await getCharacterSheet(uid, groupid);
+    if (savedSheet) {
+      populateSheet(savedSheet);
+      console.log("Character sheet loaded from Firebase.");
+    } else {
+      console.log("No saved character sheet found. Creating new one...");
+      await saveCharacterSheet(uid, groupid, {});
+    }
+
+    // --- Manual Save Button handler ---
+    saveBtn.addEventListener("click", async () => {
+      const data = getSheetData();
+      try {
+        await saveCharacterSheet(uid, groupid, data);
+        alert("Character sheet saved!");
+      } catch (err) {
+        console.error("Error saving character sheet:", err);
+        alert("Save failed. Check console for details.");
+      }
+    });
+
+    // --- Optional Auto-Save on change (uncomment to use) ---
+    /*
+    document.querySelectorAll("input, textarea").forEach(el => {
+      el.addEventListener("change", async () => {
+        const data = getSheetData();
+        await saveCharacterSheet(uid, groupid, data);
+        console.log("Auto-saved field:", el.name);
+      });
+    });
+    */
+  });
+</script>
+
+
+
+</body>
+</html>
