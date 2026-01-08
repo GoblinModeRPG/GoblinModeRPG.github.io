@@ -1,4 +1,4 @@
-import { deleteInvDB, addToInventory, getInventory, getInvInfo} from "../firebaseDnDFlavor";
+import { deleteInvDB, addToInventory, getInventory, getInvInfo} from "../firebaseDnDFlavor.js";
 import '../css/style.css';
 
 export default function Inventory() {
