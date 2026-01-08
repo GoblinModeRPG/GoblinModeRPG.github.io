@@ -15,6 +15,7 @@
     <span class="banner" >  
         <img src="../images/InventoryBanner.png">
      </span>
+    
     <div id="inventory-wrapper">
         
             <ul id="money">
@@ -30,26 +31,20 @@
             
             <table id="inventory-table">
                 <tr> 
-                    <td></td>
+                    <td><div id="inventory"></div></td>
                 </tr>
             </table>
         </table>
-        
-        
-        
     </div>
-    <div id="inventory"></div>
-    
-    
-
 </body>
 </html>
 
-  
-
   <script type="module">
     import {setMoney,getMoney} from "../firebaseDnDFlavor.js"
+    import Inventory from "./inventory.js";
     
+    Inventory();
+
     var uid = localStorage.getItem("currentUid");
     var groupid = localStorage.getItem("curID");
     var saveMe = document.getElementById('save');
@@ -74,9 +69,5 @@
     document.getElementById("money").clientWidth;
    
   </script>
-  <!-- Load our Inventory component. -->
-  <script type= "module">
-    import {Inventory} from "./inventory.js";
-    Inventory();
-  </script>
+  
     
