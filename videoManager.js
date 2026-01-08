@@ -1,10 +1,3 @@
-//https://agora-token-service-production-575a.up.railway.app/rtc/main/1/uid/1/?expiry=300
-///rtc/:channelName/:role/:tokentype/:uid/?expiry=expireTime
-
-//At some point need to add token expiration case??
-//import axios from "node_modules/axios/dist/axios.js";
-
-
 const client = AgoraRTC.createClient({mode:'rtc', codec:'vp8'})
 
 const getServerUrl = () => {
@@ -29,9 +22,6 @@ let options =
     // Dynamically determine the backend server URL
     serverUrl: getServerUrl()
 };
-//const APP_ID = "559b352c195f4ac2bd1940c9607119a2"
-//const TOKEN = "007eJxTYLhb/WXyWeFv2wtVZTl+dbQ67TV3t6kX9PGbYPrAyZzDNEWBwdTUMsnY1CjZ0NI0zSQx2SgpxdDSxCDZ0szA3NDQMtHIaKNfSkMgI0P/eSkWRgYIBPFZGHITM/MYGAC11Byf"
-//const CHANNEL = "main"
 
 async function FetchToken()
 {
@@ -44,23 +34,23 @@ async function FetchToken()
    {
        role=2;
    }
-   return new Promise(function (resolve)
-   {
+   
+   try {
+       const response = await fetch(
+           options.serverUrl+'/rtc/'+options.channel+'/'+role+'/uid/'+options.uid+'/?expiry='+ options.ExpireTime
+       );
        
-       axios.get(options.serverUrl+'/rtc/'+options.channel+'/'+role+'/uid/'+options.uid+'/?expiry='+ options.ExpireTime)
-        
-       .then(
-           response =>
-           {
-               console.log(response.data.rtcToken);
-               resolve(response.data.rtcToken);
-           })
-           .catch(error =>
-               {
-                   console.log(error);
-               });
-   });
-
+       if (!response.ok) {
+           throw new Error(`HTTP error! status: ${response.status}`);
+       }
+       
+       const data = await response.json();
+       console.log(data.rtcToken);
+       return data.rtcToken;
+   } catch (error) {
+       console.log(error);
+       throw error;
+   }
 }
 
 let localTracks = []
@@ -72,19 +62,7 @@ let joinAndDisplayLocalStream = async () => {
     
     client.on('user-left', handleUserLeft)
     
-    
-    //From Agora Tutorial
-    /*if(document.getElementById('textbox').value == '')
-    {
-        window.alert("Channel name is required!");
-        return;
-    }*/
-    //get local storage channel name
-    //var groupID = localStorage.getItem("curID");
-    //options.channel = groupID;
-    //options.channel=document.getElementById('textbox').value;
     options.token=await FetchToken();
-    //From Agora Tutorial
 
     options.uid = await client.join(options.appId, options.channel, options.token, null)
 
