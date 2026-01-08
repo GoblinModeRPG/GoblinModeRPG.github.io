@@ -30,21 +30,23 @@
             
             <table id="inventory-table">
                 <tr> 
-                    <td><div id="inventory"></div></td>
+                    <td></td>
                 </tr>
             </table>
         </table>
         
         
+        
     </div>
+    <div id="inventory"></div>
     
     
 
 </body>
 </html>
 
-  <!-- Load our Inventory component. -->
-  <script type= "module" src="../mainInventory.js"></script>
+  
+
   <script type="module">
     import {setMoney,getMoney} from "../firebaseDnDFlavor.js"
     
@@ -71,5 +73,10 @@
     }
     document.getElementById("money").clientWidth;
    
+  </script>
+  <!-- Load our Inventory component. -->
+  <script type= "module">
+    import {Inventory} from "./inventory.js";
+    Inventory();
   </script>
     
