@@ -1,5 +1,4 @@
 import { deleteSpellDB, addToSpells, getSpells, getSpellInfo} from "../firebaseDnDFlavor.js";
-import '../css/style.css';
 import 'boxicons';
 
 export default function SpellBook() {
