@@ -1,4 +1,5 @@
 import { deleteSpellDB, addToSpells, getSpells, getSpellInfo} from "../firebaseDnDFlavor.js";
+import 'boxicons';
 
 export default function SpellBook() {
     let state = {
